@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+	<div layout:fragment="content">
+
+		<!-- HERO SECTION -->
+		<section class="text-center py-5 bg-light rounded shadow-sm mb-5">
+			<h1 class="fw-bold mb-3">Chào mừng đến với FAMILY Coffee ☕</h1>
+			<p class="lead text-muted">Nơi hội tụ hương vị cà phê nguyên chất
+				– Đậm đà – Tinh tế – Trọn vẹn cảm xúc</p>
+
+			<a th:href="@{/products/list}" class="btn btn-dark btn-lg mt-3 px-4">
+				<i class="fa-solid fa-mug-hot"></i> Khám Phá Sản Phẩm
+			</a>
+		</section>
+
+
+		<!-- VỀ CHÚNG TÔI -->
+		<section class="container py-5">
+			<div class="row align-items-center">
+
+				<div class="col-md-6">
+					<img
+						src="https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+						class="img-fluid rounded shadow w-100"
+						style="height: 400px; object-fit: cover;" alt="Coffee">
+				</div>
+
+				<div class="col-md-6">
+					<h2 class="fw-bold mb-3">Về Chúng Tôi</h2>
+
+					<p>FAMILY Coffee được thành lập với niềm đam mê mãnh liệt dành
+						cho cà phê nguyên chất. Chúng tôi tin rằng một ly cà phê ngon
+						không chỉ đánh thức vị giác, mà còn khơi nguồn cảm hứng và năng
+						lượng cho cả ngày dài.</p>
+
+					<p>Từ khâu lựa chọn hạt cà phê tại các vùng trồng nổi tiếng,
+						đến quy trình rang xay khép kín đạt tiêu chuẩn, mỗi sản phẩm của
+						chúng tôi đều được chăm chút tỉ mỉ nhằm giữ trọn hương vị tự nhiên
+						và tinh túy nhất.</p>
+
+					<p>FAMILY Coffee không chỉ bán cà phê — chúng tôi mang đến trải
+						nghiệm, sự kết nối và những khoảnh khắc thư giãn đáng nhớ.</p>
+				</div>
+
+			</div>
+		</section>
+
+
+		<!-- SỨ MỆNH & TẦM NHÌN -->
+		<section class="bg-light py-5">
+			<div class="container">
+				<div class="row text-center">
+
+					<div class="col-md-6 mb-4">
+						<h3 class="fw-bold mb-3">Sứ Mệnh</h3>
+						<p>Mang đến những sản phẩm cà phê chất lượng cao, an toàn và
+							giàu hương vị, giúp khách hàng tận hưởng từng khoảnh khắc trong
+							cuộc sống.</p>
+					</div>
+
+					<div class="col-md-6 mb-4">
+						<h3 class="fw-bold mb-3">Tầm Nhìn</h3>
+						<p>Trở thành thương hiệu cà phê được yêu thích hàng đầu, xây
+							dựng cộng đồng những người yêu cà phê và lan tỏa văn hóa thưởng
+							thức cà phê Việt.</p>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- GIÁ TRỊ CỐT LÕI -->
+		<section class="bg-dark text-white py-5">
+			<div class="container text-center">
+				<h2 class="fw-bold mb-5">Giá Trị Cốt Lõi</h2>
+
+				<div class="row">
+
+					<div class="col-md-4 mb-4">
+						<i class="fa-solid fa-seedling fa-3x mb-3"></i>
+						<h5>Nguyên Liệu Tự Nhiên</h5>
+						<p>100% hạt cà phê nguyên chất, không pha trộn tạp chất, đảm
+							bảo sức khỏe cho người tiêu dùng.</p>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<i class="fa-solid fa-heart fa-3x mb-3"></i>
+						<h5>Tận Tâm Phục Vụ</h5>
+						<p>Mỗi khách hàng đều được phục vụ bằng sự chân thành và
+							chuyên nghiệp.</p>
+					</div>
+
+					<div class="col-md-4 mb-4">
+						<i class="fa-solid fa-award fa-3x mb-3"></i>
+						<h5>Chất Lượng Hàng Đầu</h5>
+						<p>Quy trình kiểm soát nghiêm ngặt, cam kết mang đến sản phẩm
+							tốt nhất.</p>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- LÝ DO CHỌN CHÚNG TÔI -->
+		<section class="container py-5">
+			<h2 class="text-center fw-bold mb-4">Vì Sao Chọn FAMILY Coffee?</h2>
+
+			<div class="row">
+
+				<div class="col-md-6">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">✔ Hạt cà phê tuyển chọn từ vùng
+							nguyên liệu chất lượng</li>
+						<li class="list-group-item">✔ Rang xay theo công nghệ hiện
+							đại</li>
+						<li class="list-group-item">✔ Giá cả hợp lý – Phù hợp mọi đối
+							tượng</li>
+						<li class="list-group-item">✔ Giao hàng nhanh chóng – Đóng
+							gói cẩn thận</li>
+					</ul>
+				</div>
+
+				<div class="col-md-6">
+					<p>Chúng tôi không ngừng cải tiến để mang lại những sản phẩm
+						tốt hơn mỗi ngày. Sự hài lòng của khách hàng chính là động lực để
+						FAMILY Coffee phát triển bền vững.</p>
+
+					<a th:href="@{/products/list}" class="btn btn-warning mt-3 px-4">
+						Xem Sản Phẩm Ngay </a>
+				</div>
+
+			</div>
+		</section>
+
+	</div>
+</body>
+</html>

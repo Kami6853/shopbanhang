@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+	<div layout:fragment="content">
+
+		<div class="container mt-4">
+
+			<h3 class="mb-4 text-center fw-bold">QUẢN LÝ SẢN PHẨM</h3>
+
+			<!-- ===== SEARCH FORM ===== -->
+			<form method="get" th:action="@{/admin/products}" class="mb-3">
+				<div class="row g-2">
+
+					<div class="col-md-4">
+						<input type="text" name="keyword" th:value="${keyword}"
+							class="form-control" placeholder="Tìm theo tên sản phẩm">
+					</div>
+
+					<div class="col-md-3">
+						<input type="number" name="minPrice" th:value="${minPrice}"
+							class="form-control" placeholder="Giá từ">
+					</div>
+
+					<div class="col-md-3">
+						<input type="number" name="maxPrice" th:value="${maxPrice}"
+							class="form-control" placeholder="Đến giá">
+					</div>
+
+					<div class="col-md-2 d-grid">
+						<button class="btn btn-primary">
+							<i class="fa-solid fa-magnifying-glass"></i> Tìm
+						</button>
+					</div>
+
+				</div>
+			</form>
+
+			<div class="row">
+
+				<!-- ===== TABLE ===== -->
+				<div class="col-md-8">
+					<div class="card shadow-sm">
+						<div class="card-body">
+
+							<table class="table table-bordered table-hover align-middle">
+								<thead class="table-dark">
+									<tr>
+										<th>ID</th>
+										<th>Tên</th>
+										<th>Ảnh</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Ngày tạo</th>
+										<th>Loại</th>
+										<th>Trạng thái</th>
+										<th>HĐ</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr th:each="p : ${items}">
+										<td th:text="${p.id}"></td>
+										<td th:text="${p.name}"></td>
+										<td><img th:src="@{'/img/' + ${p.image}}" width="60"
+											height="60" style="object-fit: cover"></td>
+										<td th:text="${p.price}"></td>
+										<td th:text="${p.quantity}"></td>
+										<td th:text="${p.createDate}"></td>
+										<td th:text="${p.categories.name}"></td>
+										<td><span th:if="${p.available}" class="badge bg-success">Đang
+												bán</span> <span th:if="${!p.available}" class="badge bg-secondary">Ngừng
+												bán</span></td>
+										<td><a
+											th:href="@{/admin/products/edit/{id}(
+													id=${p.id},
+													keyword=${keyword},
+													minPrice=${minPrice},
+													maxPrice=${maxPrice},
+													page=${page.number}
+												)}"
+											class="btn btn-sm btn-warning text-white"> Sửa </a></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<!-- ===== PAGINATION ===== -->
+							<nav class="mt-4" th:if="${page != null and page.totalPages > 1}">
+								<ul class="pagination justify-content-center">
+
+									<li class="page-item"
+										th:classappend="${page.first} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/admin/products(
+												page=0,
+												keyword=${keyword},
+												minPrice=${minPrice},
+												maxPrice=${maxPrice}
+											)}">
+											<i class="fa-solid fa-angles-left"></i>
+									</a></li>
+
+									<li class="page-item"
+										th:classappend="${page.first} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/admin/products(
+												page=${page.number - 1},
+												keyword=${keyword},
+												minPrice=${minPrice},
+												maxPrice=${maxPrice}
+											)}">
+											<i class="fa-solid fa-angle-left"></i>
+									</a></li>
+
+									<li class="page-item disabled"><span class="page-link">
+											Trang [[${page.number + 1}]] / [[${page.totalPages}]] </span></li>
+
+									<li class="page-item"
+										th:classappend="${page.last} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/admin/products(
+												page=${page.number + 1},
+												keyword=${keyword},
+												minPrice=${minPrice},
+												maxPrice=${maxPrice}
+											)}">
+											<i class="fa-solid fa-angle-right"></i>
+									</a></li>
+
+									<li class="page-item"
+										th:classappend="${page.last} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/admin/products(
+												page=${page.totalPages - 1},
+												keyword=${keyword},
+												minPrice=${minPrice},
+												maxPrice=${maxPrice}
+											)}">
+											<i class="fa-solid fa-angles-right"></i>
+									</a></li>
+
+								</ul>
+							</nav>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- ===== FORM (GIỮ NGUYÊN) ===== -->
+				<div class="col-md-4">
+					<div class="card shadow-sm">
+						<div class="card-body">
+
+							<form th:object="${item}" method="post"
+								enctype="multipart/form-data">
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">ID</label> <input
+										th:field="*{id}" class="form-control" readonly>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Tên sản phẩm</label> <input
+										th:field="*{name}" class="form-control"> <small
+										class="text-danger" th:errors="*{name}"></small>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Hình ảnh</label> <input
+										type="file" name="imageFile" class="form-control">
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Giá</label> <input
+										th:field="*{price}" class="form-control"> <small
+										class="text-danger" th:errors="*{price}"></small>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Số lượng</label> <input
+										th:field="*{quantity}" class="form-control"> <small
+										class="text-danger" th:errors="*{quantity}"></small>
+								</div>
+
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Ngày tạo</label> <input
+										th:field="*{createDate}" type="date" class="form-control">
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Trạng thái</label> <select
+										th:field="*{available}" class="form-select">
+										<option th:value="true">Đang bán</option>
+										<option th:value="false">Ngừng bán</option>
+									</select>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label fw-bold">Loại sản phẩm</label> <select
+										th:field="*{categories.id}" class="form-select">
+										<option value="">-- Chọn loại --</option>
+										<option th:each="c : ${categories}" th:value="${c.id}"
+											th:text="${c.name}"></option>
+									</select> <small class="text-danger" th:errors="*{categories}"></small>
+								</div>
+
+								<hr>
+
+								<div class="d-flex gap-2 justify-content-center">
+									<button formaction="/admin/products/create"
+										class="btn btn-success">Thêm</button>
+									<!-- Nếu đã chọn sản phẩm -->
+									<a th:if="${item.id != null}"
+										th:href="@{/admin/products/delete/{id}(id=${item.id})}"
+										class="btn btn-danger"
+										onclick="return confirm('Xóa sản phẩm?')"> Xóa </a>
+
+									<!-- Nếu chưa chọn -->
+									<button th:if="${item.id == null}" type="button"
+										class="btn btn-danger"
+										onclick="alert('Vui lòng chọn sản phẩm cần xóa!')">
+										Xóa</button>
+									<button formaction="/admin/products/update"
+										class="btn btn-warning text-white">Cập nhật</button>
+									<a th:href="@{/admin/products}" class="btn btn-secondary">Làm
+										mới</a>
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div th:if="${success}">
+			<script>
+				alert("[[${success}]]");
+			</script>
+		</div>
+	</div>
+</body>
+</html>

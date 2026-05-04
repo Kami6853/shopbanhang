@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+
+	<div layout:fragment="content"
+		class="d-flex justify-content-center align-items-center"
+		style="min-height: 60vh;">
+
+		<div class="card shadow-sm p-4" style="width: 100%; max-width: 420px;">
+
+			<h4 class="text-center mb-4 fw-bold text-uppercase">Đăng nhập</h4>
+
+			<!-- Thông báo lỗi -->
+			<div th:if="${error}" class="alert alert-danger text-center">
+				<span th:text="${error}"></span>
+			</div>
+
+			<!-- Thông báo thành công -->
+			<div th:if="${success}" class="alert alert-success text-center">
+				<span th:text="${success}"></span>
+			</div>
+
+			<form th:action="@{/auth/login}" method="post">
+
+				<div class="mb-3">
+					<label class="form-label">Username</label> <input type="text"
+						name="email" class="form-control" placeholder="Nhập Username"
+						th:value="${email}">
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Mật khẩu</label> <input type="password"
+						name="password" class="form-control" placeholder="Nhập mật khẩu"
+						required>
+				</div>
+
+				<div class="form-check mb-3">
+					<input class="form-check-input" type="checkbox" name="remember">
+					<label class="form-check-label"> Nhớ đăng nhập </label>
+				</div>
+
+				<div class="d-grid">
+					<button class="btn btn-primary  fw-semibold">Đăng nhập</button>
+				</div>
+
+			</form>
+
+			<div class="text-center mt-3">
+				<small class="text-muted"> Chưa có tài khoản? <a
+					th:href="@{/account/sign-up}"
+					class="text-decoration-none fw-semibold"> Đăng ký </a>
+				</small>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+	crossorigin="anonymous">
+<!-- Bootstrap JS -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+	crossorigin="anonymous"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+.navbar .dropdown:hover .dropdown-menu {
+	display: block;
+	margin-top: 0;
+}
+
+.navbar .dropdown-menu {
+	margin-top: 0;
+}
+
+.navbar .dropdown-toggle::after {
+	margin-left: 6px;
+}
+
+#btnTop {
+	display: none;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	z-index: 9999;
+	background-color: #ffc107;
+	color: black;
+	border: none;
+	padding: 12px 15px;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	transition: 0.3s;
+}
+
+#btnTop:hover {
+	background-color: #e0a800;
+	transform: scale(1.1);
+}
+</style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<div class="sticky-top">
+		<!-- HEADER -->
+		<div th:replace="fragments/header :: header"></div>
+
+		<!-- MENU -->
+		<div th:replace="fragments/menu :: menu"></div>
+	</div>
+	<!-- CONTENT (QUAN TRỌNG NHẤT) -->
+	<main class="container my-4 flex-grow-1">
+		<div layout:fragment="content"></div>
+	</main>
+
+	<!-- FOOTER -->
+	<div class="mt-auto" th:replace="fragments/footer :: footer"></div>
+
+	<button onclick="scrollToTop()" id="btnTop" title="Lên đầu trang">
+		<i class="fa-solid fa-arrow-up"></i>
+	</button>
+
+	<script>
+window.onscroll = function () {
+	let btn = document.getElementById("btnTop");
+	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 200) {
+		btn.style.display = "block";
+	} else {
+		btn.style.display = "none";
+	}
+};
+
+function scrollToTop() {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth"
+	});
+}
+</script>
+
+
+	<script>
+		function previewAvatar(input) {
+			if (input.files && input.files[0]) {
+				const img = document.getElementById("previewImage");
+				img.src = URL.createObjectURL(input.files[0]);
+			}
+		}
+	</script>
+</body>
+</html>

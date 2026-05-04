@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}">
+<body>
+<div layout:fragment="content">
+    <h3 th:text="${product.name}">Tên sản phẩm</h3>
+    <p th:text="${product.description}">Mô tả</p>
+    <p><strong>Giá:</strong> <span th:text="${product.price}"></span></p>
+    <a th:href="@{/cart/add/{id}(id=${product.id})}"
+       class="btn btn-success">Thêm vào giỏ</a>
+</div>
+</body>
+</html>

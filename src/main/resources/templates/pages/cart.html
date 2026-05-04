@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+
+	<div layout:fragment="content">
+
+		<!-- ===== HEADER CENTER ===== -->
+		<div class="container my-5 text-center">
+			<h2 class="fw-bold text-uppercase">
+				<i class="fa-solid fa-cart-shopping me-2"></i>Giỏ hàng của bạn
+			</h2>
+			<p class="text-muted">Kiểm tra lại sản phẩm trước khi thanh toán</p>
+		</div>
+
+		<div class="container mb-5">
+
+			<!-- MESSAGE -->
+			<div th:if="${message}" class="alert alert-info text-center"
+				th:text="${message}"></div>
+
+			<!-- EMPTY CART -->
+			<div th:if="${cart == null or #lists.isEmpty(cart.items)}"
+				class="text-center text-muted py-5">
+				<i class="fa-solid fa-cart-arrow-down fa-3x mb-3"></i>
+				<h5>Giỏ hàng đang trống</h5>
+			</div>
+
+			<div class="row"
+				th:if="${cart != null and !#lists.isEmpty(cart.items)}">
+
+				<!-- ===== LIST ITEMS ===== -->
+				<div class="col-lg-8">
+
+					<div th:each="item : ${cart.items}"
+						class="card mb-3 shadow-sm border-0 rounded-4">
+
+						<div class="row g-0 align-items-center p-3">
+
+							<!-- IMAGE -->
+							<div class="col-md-2 text-center">
+								<img th:src="@{'/img/' + ${item.image}}"
+									class="img-fluid rounded" style="max-height: 100px">
+							</div>
+
+							<!-- NAME -->
+							<div class="col-md-3">
+								<h6 class="fw-bold mb-1" th:text="${item.name}"></h6>
+								<span class="text-danger fw-bold"> <span
+									th:text="${#numbers.formatDecimal(item.price,0,'COMMA',0,'POINT')}"></span>
+									₫
+								</span>
+							</div>
+
+							<!-- QTY -->
+							<div class="col-md-3">
+								<form th:action="@{/cart/update/{id}(id=${item.id})}"
+									method="post" class="d-flex justify-content-center">
+									<input type="number" name="qty" min="1" th:value="${item.qty}"
+										class="form-control text-center" style="width: 90px"
+										onchange="this.form.submit()">
+								</form>
+							</div>
+
+							<!-- SUBTOTAL -->
+							<div class="col-md-2 fw-bold text-primary text-center">
+								<span
+									th:text="${#numbers.formatDecimal(item.price * item.qty,0,'COMMA',0,'POINT')}"></span>
+								₫
+							</div>
+
+							<!-- REMOVE -->
+							<div class="col-md-2 text-end">
+								<a th:href="@{/cart/remove/{id}(id=${item.id})}"
+									class="btn btn-outline-danger btn-sm"> <i
+									class="fa-solid fa-trash"></i>
+								</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- ===== SUMMARY ===== -->
+				<div class="col-lg-4">
+
+					<div class="card shadow-sm border-0 rounded-4 p-4">
+						<h5 class="fw-bold mb-3">Tóm tắt đơn hàng</h5>
+
+						<div class="d-flex justify-content-between mb-2">
+							<span>Tổng số lượng</span> <strong th:text="${cart.count}"></strong>
+						</div>
+
+						<hr>
+
+						<div class="d-flex justify-content-between mb-4">
+							<span class="fw-bold">Tổng tiền</span> <span
+								class="fw-bold text-danger fs-5"> <span
+								th:text="${#numbers.formatDecimal(cart.amount,0,'COMMA',0,'POINT')}"></span>
+								₫
+							</span>
+						</div>
+
+						<div class="d-grid gap-2">
+							<a th:href="@{/cart/pay}" class="btn btn-success btn-lg"> <i
+								class="fa-solid fa-credit-card me-1"></i> Thanh toán
+							</a> <a th:href="@{/cart/clear}" class="btn btn-outline-secondary">
+								Xóa tất cả </a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

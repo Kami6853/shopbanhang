@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+	<div layout:fragment="content">
+		<!-- ===== HEADER ===== -->
+		<div class="container my-4 text-center">
+			<h2 class="fw-bold text-uppercase">Danh sách sản phẩm</h2>
+			<p class="text-muted">Khám phá những sản phẩm mới nhất</p>
+		</div>
+		<!-- ===== SEARCH ===== -->
+		<div class="container mb-4">
+			<form method="get" th:action="@{/products/list}">
+				<div class="row g-2 justify-content-center">
+
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="keyword"
+							th:value="${keyword}" placeholder="Tìm theo tên sản phẩm">
+					</div>
+
+					<div class="col-md-2">
+						<input type="number" class="form-control" name="minPrice"
+							th:value="${minPrice}" placeholder="Giá từ">
+					</div>
+
+					<div class="col-md-2">
+						<input type="number" class="form-control" name="maxPrice"
+							th:value="${maxPrice}" placeholder="Đến giá">
+					</div>
+
+					<div class="col-md-2 d-grid">
+						<button class="btn btn-primary">
+							<i class="fa-solid fa-magnifying-glass me-1"></i> Tìm
+						</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+
+
+		<!-- ===== PRODUCTS ===== -->
+		<div class="container">
+			<div class="row g-4">
+
+				<!-- PRODUCT ITEM -->
+				<div class="col-lg-3 col-md-4 col-sm-6" th:each="p : ${items}">
+
+					<div class="card h-100 shadow-sm">
+
+						<!-- IMAGE -->
+						<img th:src="@{'/img/' + ${p.image}}" class="card-img-top"
+							style="height: 200px; object-fit: cover;">
+
+						<!-- BODY -->
+						<div class="card-body text-center">
+							<h6 class="card-title fw-semibold" th:text="${p.name}"></h6>
+
+							<p class="text-danger fw-bold fs-5 mb-1">
+								<span
+									th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}"></span>
+								₫
+							</p>
+
+							<span class="badge bg-info mb-2" th:text="${p.categories.name}"></span>
+
+							<div class="d-grid gap-2 mt-3">
+								<a th:href="@{/product/detail/{id}(id=${p.id})}"
+									class="btn btn-outline-primary btn-sm"> Xem chi tiết </a> <a
+									th:href="@{/cart/add/{id}(id=${p.id})}"
+									class="btn btn-primary btn-sm" th:if="${p.available}"> Thêm
+									vào giỏ </a>
+
+
+								<button class="btn btn-secondary btn-sm" th:if="${!p.available}"
+									disabled>Ngừng bán</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- EMPTY -->
+				<div th:if="${#lists.isEmpty(items)}" class="text-center text-muted">
+					<p>Chưa có sản phẩm nào</p>
+				</div>
+
+			</div>
+		</div>
+		<!-- ===== PAGINATION ===== -->
+		<nav class="mt-5" th:if="${page.totalPages > 1}">
+			<ul class="pagination justify-content-center">
+
+				<!-- FIRST -->
+				<li class="page-item" th:classappend="${page.first} ? 'disabled'">
+					<a class="page-link"
+					th:href="@{/products/list(
+				   p=0,
+				   keyword=${keyword},
+				   minPrice=${minPrice},
+				   maxPrice=${maxPrice}
+			   )}">⏮</a>
+				</li>
+
+				<!-- PREVIOUS -->
+				<li class="page-item" th:classappend="${page.first} ? 'disabled'">
+					<a class="page-link"
+					th:href="@{/products/list(
+				   p=${page.number - 1},
+				   keyword=${keyword},
+				   minPrice=${minPrice},
+				   maxPrice=${maxPrice}
+			   )}">«</a>
+				</li>
+
+				<!-- PAGE NUMBER -->
+				<li class="page-item"
+					th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+					th:classappend="${i == page.number} ? 'active'"><a
+					class="page-link"
+					th:href="@{/products/list(
+				   p=${i},
+				   keyword=${keyword},
+				   minPrice=${minPrice},
+				   maxPrice=${maxPrice}
+			   )}"
+					th:text="${i + 1}"> </a></li>
+
+				<!-- NEXT -->
+				<li class="page-item" th:classappend="${page.last} ? 'disabled'">
+					<a class="page-link"
+					th:href="@{/products/list(
+				   p=${page.number + 1},
+				   keyword=${keyword},
+				   minPrice=${minPrice},
+				   maxPrice=${maxPrice}
+			   )}">»</a>
+				</li>
+
+				<!-- LAST -->
+				<li class="page-item" th:classappend="${page.last} ? 'disabled'">
+					<a class="page-link"
+					th:href="@{/products/list(
+				   p=${page.totalPages - 1},
+				   keyword=${keyword},
+				   minPrice=${minPrice},
+				   maxPrice=${maxPrice}
+			   )}">⏭</a>
+				</li>
+
+			</ul>
+		</nav>
+
+
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+
+	<div layout:fragment="content"
+		class="d-flex justify-content-center align-items-center"
+		style="min-height: 65vh;">
+
+		<div class="card shadow-sm p-4" style="width: 100%; max-width: 450px;">
+
+			<h4 class="text-center mb-4 fw-bold text-uppercase">Cập nhật
+				thông tin</h4>
+
+			<form th:action="@{/account/edit-profile}" method="post"
+				th:object="${item}" enctype="multipart/form-data">
+
+				<!-- Username: KHÔNG SỬA -->
+				<input type="hidden" th:field="*{username}">
+
+				<!-- AVATAR -->
+				<div class="text-center mb-4">
+					<img th:src="@{/image/{img}(img=${item.photo})}"
+						onerror="this.src='/image/user.png'"
+						class="rounded-circle border shadow-sm"
+						style="width: 120px; height: 120px; object-fit: cover;">
+				</div>
+
+				<!-- Upload new photo -->
+				<div class="mb-3">
+					<label class="form-label">Đổi ảnh đại diện</label> <input
+						type="file" class="form-control" name="photoFile">
+				</div>
+
+				<!-- Fullname -->
+				<div class="mb-3">
+					<label class="form-label">Họ và tên</label> <input type="text"
+						class="form-control" th:field="*{fullname}"> <small
+						class="text-danger" th:errors="*{fullname}"></small>
+				</div>
+
+				<!-- Email -->
+				<div class="mb-3">
+					<label class="form-label">Email</label> <input type="email"
+						class="form-control" th:field="*{email}"> <small
+						class="text-danger" th:errors="*{email}"></small>
+				</div>
+
+				<!-- Password -->
+				<div class="mb-3">
+					<label class="form-label">Mật khẩu mới</label> <input
+						type="password" class="form-control" name="newPassword"
+						placeholder="Để trống nếu không đổi">
+				</div>
+
+				<button class="btn btn-primary w-100 fw-semibold">Lưu thay
+					đổi</button>
+			</form>
+
+
+
+			<div class="text-center mt-3">
+				<a th:href="@{/home}" class="text-decoration-none"> ← Quay về
+					trang chủ </a>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

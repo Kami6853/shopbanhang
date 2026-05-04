@@ -1,0 +1,102 @@
+<nav th:fragment="menu"
+	class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+	<div class="container position-relative">
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#mainMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="mainMenu">
+
+			<!-- CỘT TRÁI (để trống hoặc logo nếu có) -->
+			<ul class="navbar-nav me-auto"></ul>
+
+			<!-- MENU GIỮA -->
+			<ul class="navbar-nav mx-auto text-nowrap">
+
+				<li class="nav-item"><a class="nav-link fw-semibold"
+					th:href="@{/home}">TRANG CHỦ</a></li>
+
+				<li class="nav-item dropdown"><a class="nav-link fw-semibold"
+					th:href="@{/products/list}"> SẢN PHẨM </a>
+
+					<ul class="dropdown-menu">
+						<li th:each="c : ${menuCategories}"><a class="dropdown-item"
+							th:href="@{/products/category/{id}(id=${c.id})}"
+							th:text="${c.name}"> </a></li>
+					</ul></li>
+
+
+				<li class="nav-item"
+					th:if="${session.user != null and session.admin == false}"><a
+					class="nav-link fw-semibold" th:href="@{/order/my}"> ĐƠN HÀNG </a></li>
+
+				<!-- ADMIN -->
+				<li class="nav-item" th:if="${session.admin == true}"><a
+					class="nav-link fw-semibold" th:href="@{/admin/categories}">
+						LOẠI SẢN PHẨM </a></li>
+
+				<li class="nav-item" th:if="${session.admin == true}"><a
+					class="nav-link fw-semibold" th:href="@{/admin/products}"> QUẢN
+						LÝ SẢN PHẨM </a></li>
+
+				<li class="nav-item" th:if="${session.admin == true}"><a
+					class="nav-link fw-semibold" th:href="@{/admin/accounts}"> QUẢN
+						LÝ TÀI KHOẢN </a></li>
+
+				<li class="nav-item" th:if="${session.admin == true}"><a
+					class="nav-link fw-semibold" th:href="@{/admin/report}"> THỐNG
+						KÊ </a></li>
+			</ul>
+
+			<!-- BÊN PHẢI -->
+			<ul class="navbar-nav ms-auto align-items-center text-nowrap">
+
+				<li class="nav-item" th:if="${session.user != null}"><a
+					class="nav-link position-relative" th:href="@{/cart}"> <i
+						class="fa-solid fa-cart-shopping fs-5"></i> <span
+						class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+						th:text="${cart != null ? cart.count : 0}"> </span>
+				</a></li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle fw-semibold" href="#"
+					data-bs-toggle="dropdown"> <i class="fa-solid fa-user me-1"></i>
+						<span
+						th:text="${session.user != null ? session.user.fullname : 'TÀI KHOẢN'}"></span>
+				</a>
+
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li th:if="${session.user == null}"><a class="dropdown-item"
+							th:href="@{/auth/login}"> <i
+								class="fa-solid fa-right-to-bracket me-2"></i> Đăng nhập
+						</a></li>
+
+						<li th:if="${session.user == null}"><a class="dropdown-item"
+							th:href="@{/account/sign-up}"> <i
+								class="fa-solid fa-user-plus me-2"></i> Đăng ký
+						</a></li>
+
+						<li th:if="${session.user != null}"><a class="dropdown-item"
+							th:href="@{/account/edit-profile}"> <i
+								class="fa-solid fa-user-pen me-2"></i> Cập nhật thông tin
+						</a></li>
+
+						<li th:if="${session.user != null}">
+							<hr class="dropdown-divider">
+						</li>
+
+						<li th:if="${session.user != null}"><a
+							class="dropdown-item text-danger" th:href="@{/auth/logout}">
+								<i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+						</a></li>
+					</ul></li>
+
+
+			</ul>
+
+		</div>
+
+	</div>
+</nav>

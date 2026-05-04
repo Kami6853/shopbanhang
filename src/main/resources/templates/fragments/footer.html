@@ -1,0 +1,42 @@
+<footer th:fragment="footer" class="bg-dark text-light pt-4">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-4 mb-3">
+				<h5 class="text-warning fw-bold">☕ FAMILY COFFEE</h5>
+				<p class="text-muted">Mang đến hương vị cà phê nguyên chất, đậm
+					đà và tinh tế cho mỗi ngày của bạn.</p>
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<h6 class="text-uppercase text-warning">Liên kết</h6>
+				<ul class="list-unstyled">
+					<li><a th:href="@{/home}" class="text-light text-decoration-none">Trang
+							chủ</a></li>
+					<li><a th:href="@{/products/list}"
+						class="text-light text-decoration-none">Sản phẩm</a></li>
+					<li><a th:href="@{/cart}"
+						class="text-light text-decoration-none">Giỏ hàng</a></li>
+					<li><a th:href="@{/home/contact}"
+						class="text-light text-decoration-none">Liên hệ</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<h6 class="text-uppercase text-warning">Liên hệ</h6>
+				<p class="mb-1">
+					<i class="fa-solid fa-location-dot me-2"></i>Thành Phố Hồ Chí Minh, Việt Nam
+				</p>
+				<p class="mb-1">
+					<i class="fa-solid fa-phone me-2"></i>0123 456 789
+				</p>
+				<p>
+					<i class="fa-solid fa-envelope me-2"></i>familycoffee@gmail.com
+				</p>
+			</div>
+			<hr class="border-secondary">
+			<div class="text-center pb-3 text-light">© 2026 FAMILY Coffee. All
+				rights reserved.</div>
+		</div>
+	</div>
+</footer>

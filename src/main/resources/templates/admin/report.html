@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main-layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="text-center mb-4">
+			<h3 class="fw-bold">
+				<i class="fa-solid fa-chart-column me-2"></i> THỐNG KÊ LOẠI SẢN PHẨM
+			</h3>
+			<p class="text-muted mb-0">
+				<i class="fa-solid fa-layer-group me-1"></i> Thống kê giá trị sản
+				phẩm theo loại
+			</p>
+		</div>
+
+		<table class="table table-bordered text-center">
+			<thead class="table-dark">
+				<tr>
+					<th>Loại sản phẩm</th>
+					<th>Giá trung bình</th>
+					<th>Tổng giá</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="row : ${items}">
+					<td th:text="${row[0]}"></td>
+					<td
+						th:text="${#numbers.formatDecimal(row[1], 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
+					<td
+						th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')} + ' ₫'"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>
